@@ -1,1 +1,18 @@
+/* === Estilos globales del portafolio === */
+
+/* Importa Tailwind CSS v4 (utilidades, base y componentes) */
 @import "tailwindcss";
+
+/* Define la variante "dark" basada en la clase .dark del HTML */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Sobrescribe la fuente principal del tema con Onest Variable */
+@theme {
+  --font-sans: "Onest Variable", system-ui, sans-serif;
+}
+
+/* Scroll suave para navegación por anclas y compensación del header fijo */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
