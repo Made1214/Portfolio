@@ -1,5 +1,41 @@
-<span
-  class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
->
-  <slot />
-</span>
+---
+/**
+ * badge.astro — Componente reutilizable de badge/etiqueta.
+ * Soporta 3 variantes de estilo:
+ *   - default: fondo púrpura, usado para links sociales (GitHub, LinkedIn, etc.)
+ *   - outline: borde sutil, para badges secundarios
+ *   - tech: fondo gris con texto pequeño, para mostrar tecnologías en proyectos
+ * Si recibe un href, renderiza como <a>; de lo contrario, como <span>.
+ */
+interface Props {
+  href?: string;
+  variant?: "default" | "outline" | "tech";
+}
+
+const { href, variant = "default" } = Astro.props;
+
+const baseClasses =
+  "inline-flex items-center gap-2 text-sm font-medium transition-all duration-200";
+
+const variants: Record<string, string> = {
+  default:
+    "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-4 py-2 rounded-full hover:bg-purple-200 dark:hover:bg-purple-900/50",
+  outline:
+    "border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-full hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400",
+  tech: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-full text-xs uppercase tracking-wider font-semibold",
+};
+
+const classes = `${baseClasses} ${variants[variant]}`;
+---
+
+{
+  href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" class={classes}>
+      <slot />
+    </a>
+  ) : (
+    <span class={classes}>
+      <slot />
+    </span>
+  )
+}
