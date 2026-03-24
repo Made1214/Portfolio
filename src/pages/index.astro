@@ -1,16 +1,21 @@
 ---
-import Badge from "../components/badge.astro";
+/**
+ * index.astro — Página principal del portafolio.
+ * Compone todas las secciones del sitio en orden:
+ * Hero → Experiencia → Proyectos → Habilidades → Contacto
+ */
 import Layout from "../layouts/Layout.astro";
+import Hero from "../sections/Hero.astro";
+import Experience from "../sections/Experience.astro";
+import Projects from "../sections/Projects.astro";
+import Skills from "../sections/Skills.astro";
+import Contact from "../sections/Contact.astro";
 ---
 
-<Layout title="Welcome to My Portfolio">
-  <main>
-    <section class="w-[740px]"></section>
-    <h1 class="text-white">
-      Hey, soy Madelaine <Badge>Disponible para Trabajar</Badge>
-    </h1>
-    <h2>
-      1 año de experiencia. Desarrolladora de Software. De Ciudad de Panama
-    </h2>
-  </main>
+<Layout title="Madelaine | Portfolio">
+  <Hero />
+  <Experience />
+  <Projects />
+  <Skills />
+  <Contact />
 </Layout>
