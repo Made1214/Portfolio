@@ -1,14 +1,134 @@
+---
+/**
+ * header.astro — Barra de navegación fija superior.
+ * Incluye: logo, links de navegación por secciones (desktop),
+ * botón de cambio de tema (dark/light) y menú hamburguesa (mobile).
+ */
+const navLinks = [
+  { href: "#inicio", label: "Inicio" },
+  { href: "#experiencia", label: "Experiencia" },
+  { href: "#proyectos", label: "Proyectos" },
+  { href: "#habilidades", label: "Habilidades" },
+  { href: "#contacto", label: "Contacto" },
+];
+---
 
-<header class="flex justify-between items-center py-3 w-280">
-    <img
-        class="rounded-full w-12 h-12"
-        src="/src/assets/img/fotodev.png"
-        alt="Miduvev foto">
+<!-- Header fijo con fondo semi-transparente y blur -->
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
+>
+  <nav
+    class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20"
+  >
+    <a
+      href="#inicio"
+      class="text-xl font-bold text-purple-600 dark:text-purple-400"
+    >
+      Madelaine<span class="text-gray-900 dark:text-white"> Dev</span>
+    </a>
 
-    <nav class="flex flex-row gap-x-10 opacity-80">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/projects">Projects</a>
-        <a href="/contact">Contact</a>
-    </nav>
+    <!-- Links de navegación: visibles solo en desktop (md+) -->
+    <div class="hidden md:flex items-center gap-8">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-lg font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Controles: toggle de tema y botón de menú móvil -->
+    <div class="flex items-center gap-3">
+      <button
+        id="theme-toggle"
+        class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        aria-label="Cambiar tema"
+      >
+        <svg
+          class="w-5 h-5 hidden dark:block text-yellow-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            clip-rule="evenodd"></path>
+        </svg>
+        <svg
+          class="w-5 h-5 block dark:hidden text-gray-700"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+          ></path>
+        </svg>
+      </button>
+
+      <button
+        id="mobile-menu-toggle"
+        class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        aria-label="Abrir menú"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menú móvil desplegable: oculto por defecto, se muestra al pulsar el botón hamburguesa -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800"
+  >
+    <div class="px-4 py-3 space-y-2">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block py-2 text-lg font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
 </header>
+
+<!-- Script client-side para interactividad del header -->
+<script>
+  // Toggle de tema: alterna la clase 'dark' y guarda la preferencia en localStorage
+  document.getElementById("theme-toggle")?.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  // Toggle del menú móvil
+  document
+    .getElementById("mobile-menu-toggle")
+    ?.addEventListener("click", () => {
+      document.getElementById("mobile-menu")?.classList.toggle("hidden");
+    });
+
+  // Cierra el menú móvil al hacer click en un link de navegación
+  document.querySelectorAll("#mobile-menu a").forEach((link) => {
+    link.addEventListener("click", () => {
+      document.getElementById("mobile-menu")?.classList.add("hidden");
+    });
+  });
+</script>
