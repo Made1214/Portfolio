@@ -1,0 +1,71 @@
+---
+/**
+ * Experience.astro — Sección de experiencia profesional.
+ * Muestra una línea de tiempo vertical con las posiciones laborales.
+ * Cada entrada incluye: logo de empresa, período, cargo, empresa y descripción.
+ * Los datos se definen en el array 'experiences' del frontmatter.
+ */
+const experiences = [
+  {
+    period: "Septiembre 2023 — Enero 2024",
+    title: "Desarrolladora de Software",
+    company: "Jalpro Technology",
+    description:
+      "Encargada de la migración y automatización del sistema contable SIC23, inicialmente desarrollado en Visual Fox Pro, hacia una plataforma web interactiva. Utilicé tecnologías como PHP, CSS, JavaScript y MySQL para transformar un programa de escritorio en una solución web moderna y eficiente. Mis responsabilidades incluían la resolución de problemas de software, optimización de procesos y desarrollo de nuevas funcionalidades, mejorando significativamente la experiencia del usuario y la eficiencia del sistema.",
+    logo: "/logos/jalpro.png",
+  },
+  {
+    period: "Julio 2025 — Presente",
+    title: "Project Asistant - CTO ",
+    company: "INVU POS",
+    description:
+      "Asisto directamente al CTO facilitando la comunicación estratégica entre los equipos de desarrollo, clientes y demás departamentos. Brindo soporte técnico a clientes en sus procesos de integración con la API de InvuPOS, guiándolos desde la configuración inicial hasta la validación en producción. Utilizo Postman para diseñar, ejecutar y documentar pruebas de endpoints, y participo activamente en el testing funcional de aplicaciones internas. Elaboro y presento informes de estado, documentación técnica y reportes que apoyan la toma de decisiones del área tecnológica.",
+    logo: "/logos/invupos.webp",
+  },
+];
+---
+
+<section id="experiencia" class="py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-purple-600 dark:text-purple-400 font-semibold text-sm uppercase tracking-widest mb-2">
+      Mi trayectoria en tecnología
+    </p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-12">
+      Experiencia Profesional
+    </h2>
+
+    <!-- Línea de tiempo: cada experiencia tiene un punto indicador y tarjeta -->
+    <div class="space-y-8">
+      {experiences.map((exp, i) => (
+        <div class="relative pl-8 border-l-2 border-purple-300 dark:border-purple-700">
+          <!-- Punto circular sobre la línea de tiempo -->
+          <div class="absolute -left-2.25 top-6 w-4 h-4 rounded-full bg-purple-600 dark:bg-purple-400 border-4 border-gray-50 dark:border-gray-950"></div>
+
+          <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              <!-- Company logo placeholder -->
+              <div class="shrink-0 w-32 h-32 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center overflow-hidden">
+                <img src={exp.logo} alt={exp.company} class="w-full h-full object-contain p-1" />
+              </div>
+
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                  <div>
+                    <h3 class="text-2xl font-bold">{exp.title}</h3>
+                    <p class="text-xl text-purple-600 dark:text-purple-400 font-medium">{exp.company}</p>
+                  </div>
+                  <span class="text-base text-gray-500 dark:text-gray-400 font-medium whitespace-nowrap">
+                    {exp.period}
+                  </span>
+                </div>
+                <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+                  {exp.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
